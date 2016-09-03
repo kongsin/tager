@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">AutoGridLayoutManager</string>
+    <string name="main_domain" translatable="false">http://me-catalogsvc.azurewebsites.net</string>
+    <string name="book_url">/catalog/1044/books?c=TH</string>
+    <string name="magazine_url">/catalog/1044?c=TH</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="hello">Hello World!</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="book">Book</string>
+    <string name="magazine">Magazine</string>
+    <string name="setting">Setting</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="select_language">Select Language</string>
+    <string name="en">English</string>
+    <string name="th">ไทย</string>
+    <string name="language">Language</string>
+    <string name="note">Note</string>
+    <string name="new_note">New Note</string>
+    <string name="title">Title</string>
+    <string name="detail">Detail</string>
+    <string name="save">Save</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="login_err_duplicare_user_name">User name not available</string>
+    <string name="login_failed">Login failed</string>
+    <string name="sign_up_success">Sign up success</string>
+    <string name="theme">Theme</string>
+    <string name="sign_out">Sign out</string>
+    <string name="select_theme">Select Themes</string>
+    <string name="theme_boy">Boy</string>
+    <string name="theme_girl">Girl</string>
+    <string name="invalid_user_alert">Username must more than 4 digit</string>
+    <string name="invalid_password_alert">Password must more than 4 digit</string>
+    <string name="close">Close</string>
+    <string name="rating">Rating :</string>
+    <string name="file_size">File Size :</string>
+    <string name="price">Price :</string>
+    <string name="date">Available Date :</string>
+    <string name="overview">Overview :</string>
+    <string name="book_detail">Book detail</string>
+    <string name="writer">Writer :</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="loading">Loading</string>
+    <string name="magazine_name">Magazine Name :</string>
+    <string name="magazine_detail">Magazine Detail</string>
+    <string name="catalog">Category</string>
+    <string name="press_again_to_exit">Press again to exit!</string>
+    <string name="account_name">Account Name :</string>
+    <string name="audio">Audio</string>
+</resources>

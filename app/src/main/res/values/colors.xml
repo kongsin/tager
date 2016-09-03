@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorGirlPrimary">#E91E63</color>
+    <color name="colorGirlPrimaryDark">#C2185B</color>
+    <color name="colorGirlAccent">#5C6BC0</color>
+
+    <color name="colorBoyPrimary">#3F51B5</color>
+    <color name="colorBoyPrimaryDark">#303F9F</color>
+    <color name="colorBoyAccent">#FF4081</color>
+
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="underLineColor">#c6c5c5</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="colorGrey">#555555</color>
+
+    <color name="colorRed">#F44336</color>
+    <color name="colorRedDark">#ca3227</color>
+    <color name="colorGreen">#009688</color>
+    <color name="colorGreenDark">#03746a</color>
+    <color name="colorYellow">#FFC107</color>
+    <color name="colorYellowDark">#bf9002</color>
+
+    <color name="colorGroupList">#e7e5ea</color>
+</resources>
