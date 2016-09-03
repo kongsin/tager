@@ -2,6 +2,7 @@ package com.example.kongsin.autogridlayoutmanager;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,9 +77,8 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
                 //if opening view still not recycled so can use its to clearState
                 mShowingView.clearState();
             } else {
-                // if opening view already recycled clear opening view by get from layout manager
-                View m = mRecyclerView.getLayoutManager().getChildAt(mShowingViewPosition);
-                if (m != null) ((MagazineListViewHolder) m.getTag()).clearState();
+                // if opening view already recycled just clear clicked position
+                viewHolder.clearState();
             }
         }
         if (mShowingViewPosition != position){
