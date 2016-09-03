@@ -25,6 +25,7 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     private RecyclerView mRecyclerView;
     private MagazineListViewHolder mShowingView;
     private int mShowingViewPosition;
+    private ArrayList<ItemSizePool> itemSizePools = new ArrayList<>();
 
     public GridAdapter(Context context, RecyclerView recyclerView) {
         this.mContext = context;
@@ -58,8 +59,13 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     }
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
+    public void onViewDetachedFromWindow(MagazineListViewHolder holder) {
+        ItemSizePool sizePool = new ItemSizePool();
+        sizePool.position = holder.getAdapterPosition();
+        sizePool.w = ViewGroup.LayoutParams.MATCH_PARENT;
+        sizePool.h = holder.itemView.getMeasuredHeight();
+        itemSizePools.add(sizePool);
+        super.onViewDetachedFromWindow(holder);
     }
 
     @Override
@@ -72,7 +78,7 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
             } else {
                 // if opening view already recycled clear opening view by get from layout manager
                 View m = mRecyclerView.getLayoutManager().getChildAt(mShowingViewPosition);
-                ((MagazineListViewHolder) m.getTag()).clearState();
+                if (m != null) ((MagazineListViewHolder) m.getTag()).clearState();
             }
         }
         if (mShowingViewPosition != position){
@@ -92,5 +98,11 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     private void setValue(MagazineListViewHolder viewHolder, int position) {
         mMagazineItem.get(position).progress = !mMagazineItem.get(position).progress; // inverse progress value
         viewHolder.showState(mMagazineItem.get(viewHolder.getAdapterPosition()));
+    }
+
+    class ItemSizePool {
+        int position;
+        int w;
+        int h;
     }
 }
