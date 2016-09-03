@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutoGridLayoutManager.iml" filepath="$PROJECT_DIR$/AutoGridLayoutManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ggridlayoutmanager/ggridlayoutmanager.iml" filepath="$PROJECT_DIR$/ggridlayoutmanager/ggridlayoutmanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/roofit-release/roofit-release.iml" filepath="$PROJECT_DIR$/roofit-release/roofit-release.iml" />
       <module fileurl="file://$PROJECT_DIR$/tager/tager.iml" filepath="$PROJECT_DIR$/tager/tager.iml" />
     </modules>

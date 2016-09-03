@@ -1,1 +1,1 @@
-include ':app', ':roofit-release', ':ggridlayoutmanager', ':tager'
+include ':app', ':roofit-release', ':tager'
