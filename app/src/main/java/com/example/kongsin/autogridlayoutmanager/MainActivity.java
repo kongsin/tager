@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         layoutManager.generateDefaultLayoutParams();
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -35,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
                 outRect.right = 8;
                 outRect.top = 8;
                 outRect.bottom = 8;
+            }
+        });
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                StaggeredGridLayoutManager m = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                int[] c = new int[m.getSpanCount()];
+                m.findFirstVisibleItemPositions(c);
+                for (int i : c) {
+                    if (i == 0) m.invalidateSpanAssignments();
+                }
             }
         });
         APILoader apiLoader = new RooFit().create(APILoader.class, getString(R.string.main_domain));
