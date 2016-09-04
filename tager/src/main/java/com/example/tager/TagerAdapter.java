@@ -7,7 +7,7 @@ import android.view.ViewGroup;
  * Created by kognsin on 9/4/2016.
  */
 
-public class TagerAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class TagerAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
