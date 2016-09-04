@@ -2,9 +2,7 @@ package com.example.kongsin.autogridlayoutmanager;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kongsin.autogridlayoutmanager.magazine_entities.MagazineItem;
@@ -23,14 +21,12 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     private static final String TAG = "GridAdapter";
     private Context mContext;
     private ArrayList<MagazineItem> mMagazineItem;
-    private RecyclerView mRecyclerView;
     private MagazineListViewHolder mShowingView;
     private int mShowingViewPosition;
-    private ArrayList<ItemSizePool> itemSizePools = new ArrayList<>();
+    private ArrayList<ItemSizePool> mItemSizePools = new ArrayList<>();
 
-    public GridAdapter(Context context, RecyclerView recyclerView) {
+    public GridAdapter(Context context) {
         this.mContext = context;
-        this.mRecyclerView = recyclerView;
         Tager.getInstance().setCallBack(this);
     }
 
@@ -50,8 +46,15 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
 
     @Override
     public void onBindViewHolder(final MagazineListViewHolder holder, int position) {
-        holder.setupData(mMagazineItem.get(position));
         Tager.getInstance().subscribeView(holder);
+        holder.setupData(mMagazineItem.get(position));
+        holder.setItemSizeCallBack(new MagazineListViewHolder.ItemSizeCallBack() {
+            @Override
+            public void onNewSize(int position, int width, int height) {
+                mMagazineItem.get(position).width = width;
+                mMagazineItem.get(position).height = height;
+            }
+        });
     }
 
     @Override
@@ -60,13 +63,23 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     }
 
     @Override
+    public void onViewAttachedToWindow(MagazineListViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
     public void onViewDetachedFromWindow(MagazineListViewHolder holder) {
         ItemSizePool sizePool = new ItemSizePool();
         sizePool.position = holder.getAdapterPosition();
         sizePool.w = ViewGroup.LayoutParams.MATCH_PARENT;
         sizePool.h = holder.itemView.getMeasuredHeight();
-        itemSizePools.add(sizePool);
+        mItemSizePools.add(sizePool);
         super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onViewRecycled(MagazineListViewHolder holder) {
+        super.onViewRecycled(holder);
     }
 
     @Override

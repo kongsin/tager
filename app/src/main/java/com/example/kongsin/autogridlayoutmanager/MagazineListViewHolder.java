@@ -2,8 +2,11 @@ package com.example.kongsin.autogridlayoutmanager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +16,10 @@ import android.widget.TextView;
 
 import com.example.kongsin.autogridlayoutmanager.magazine_entities.MagazineItem;
 import com.example.tager.Tager;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 
@@ -24,12 +29,12 @@ import java.io.IOException;
 public class MagazineListViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = "MagazineListViewHolder";
-    public CustomImage mMagazineItem;
-    public ImageView mHandset;
-    public TextView mTextTitle, mTextContent, mTextRating;
-    public ProgressBar progressBar;
-    public ItemClickCallBack mListener;
-
+    private CustomImage mMagazineItem;
+    private ImageView mHandset;
+    private TextView mTextTitle, mTextContent, mTextRating;
+    private ProgressBar progressBar;
+    private ItemClickCallBack mListener;
+    private ItemSizeCallBack itemSizeCallBack;
 
     public MagazineListViewHolder(Context context, ViewGroup parent) {
         super(LayoutInflater.from(context).inflate(R.layout.magazine_layout, parent, false));
@@ -43,6 +48,10 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
                 Tager.getInstance().sendCallback(m, getAdapterPosition());
             }
         });
+    }
+
+    public void setItemSizeCallBack(ItemSizeCallBack itemSizeCallBack) {
+        this.itemSizeCallBack = itemSizeCallBack;
     }
 
     public void setOnClickListener(final ItemClickCallBack listener){
@@ -84,20 +93,28 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
         showHandSet(magazineItem);
     }
 
-    public void setupData(MagazineItem magazineItem){
-        setImageAlpha(magazineItem);
-        setProgressBar(magazineItem);
-        showHandSet(magazineItem);
-        mMagazineItem.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        mMagazineItem.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        mMagazineItem.requestLayout();
+    public void setupData(final MagazineItem magazineItem){
+        Log.i(TAG, "setupData: ");
+        showState(magazineItem);
 
-        Picasso.with(itemView.getContext()).load(magazineItem.imageUrl).resize(itemView.getMeasuredWidth(), 0).into(mMagazineItem);
-        progressBar.setTag("ProgressBar_"+getAdapterPosition());
-        mMagazineItem.setTag(getAdapterPosition());
+        Drawable drawable = new GradientDrawable();
+        mMagazineItem.getLayoutParams().width = 344;
+        mMagazineItem.getLayoutParams().height = 427;
+        drawable.setBounds(0, 0, 344, 427);
+
+        mMagazineItem.requestLayout();
+        mMagazineItem.setImageResource(R.mipmap.ic_launcher);
+
+        mMagazineItem.setTag(magazineItem);
+
+        RequestCreator creator = Picasso.with(itemView.getContext()).load(magazineItem.imageUrl).placeholder(drawable);
+        creator.resize(itemView.getMeasuredWidth(), 0);
+        creator.into(mMagazineItem);
+
         mMagazineItem.url = magazineItem.imageUrl;
         mMagazineItem.position = getAdapterPosition();
         mMagazineItem.magazineItem = magazineItem;
+
         mTextTitle.setText(magazineItem.title);
         mTextContent.setText(magazineItem.subtitle);
         mTextRating.setText(String.valueOf(magazineItem.rating));
@@ -143,5 +160,17 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
 
     public interface ItemClickCallBack{
         void onClicked(int position);
+    }
+
+    public class ItemLoader{
+        public MagazineListViewHolder mViewHolder;
+        public MagazineItem mMagazineItem;
+        public int imgWidth;
+        public Bitmap bitmap;
+        public ItemLoader(MagazineListViewHolder viewHolder, MagazineItem magazineItem){
+            this.mMagazineItem = magazineItem;
+            this.imgWidth = viewHolder.itemView.getMeasuredWidth();
+            this.mViewHolder = viewHolder;
+        }
     }
 }

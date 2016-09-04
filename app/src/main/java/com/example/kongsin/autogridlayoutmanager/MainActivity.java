@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mGridAdapter = new GridAdapter(MainActivity.this, mRecyclerView);
+                        mGridAdapter = new GridAdapter(MainActivity.this);
                         mGridAdapter.setDataSet(magazine.data.itemGroups);
                         mRecyclerView.setAdapter(mGridAdapter);
                     }
