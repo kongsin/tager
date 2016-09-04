@@ -14,7 +14,7 @@ public class Tager {
 
     private static Tager mTager;
     private static final String TAG = "Tager";
-    private TagerCallback mTagerCallback;
+    private ArrayList<TagerCallback> mTagerCallbacks;
     private RecyclerView mRecyclerView;
     private ArrayList<PinningObject> mPinnedView = new ArrayList<>();
 
@@ -72,7 +72,11 @@ public class Tager {
     }
 
     public void sendCallback(RecyclerView.ViewHolder rootView,@IdRes int position){
-        mTager.mTagerCallback.onReceived(position, rootView);
+        if (mTager.mTagerCallbacks.size() > 0) {
+            for (TagerCallback mTagerCallback : mTager.mTagerCallbacks) {
+                mTagerCallback.onReceived(position, rootView);
+            }
+        }
     }
 
     public <T> T getActualView(RecyclerView.ViewHolder view){
@@ -94,7 +98,15 @@ public class Tager {
     }
 
     public void setCallBack(TagerCallback tagerCallback){
-        mTager.mTagerCallback = tagerCallback;
+        mTager.mTagerCallbacks.add(tagerCallback);
+    }
+
+    public void removeCallBack(TagerCallback tagerCallback){
+        mTager.mTagerCallbacks.remove(tagerCallback);
+    }
+
+    public void clearCallBack(){
+        mTager.mTagerCallbacks.clear();
     }
 
     public class PinningObject{

@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Mag
     private static final String TAG = "MainActivity";
     private GridAdapter mGridAdapter;
     private RecyclerView mRecyclerView;
-    private MagazineListViewHolder mShowingView;
-    private int mShowingViewPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
