@@ -12,18 +12,18 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Mag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Tager.getInstance().setCallBack(this);
-        }
+    }
         
         @Override
     public void onReceived(int position, MagazineListViewHolder viewHolder) {
       //Do something with ViewHolder
     }
-  }
+}
 ```
 ##Adapter Class
 ```JAVA
 public class GridAdapter extends TagerAdapter<MagazineListViewHolder> {
-@Override
+    @Override
     public MagazineListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MagazineListViewHolder(mContext, parent);
     }
@@ -62,6 +62,32 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
     public void setupData(final MagazineItem magazineItem){
       //set data to view component
     }
-    
 }
+```
+## Pin
+-Single Selection
+-Multi Selecteion
+
+Pin is feature to remember which item was selected for single item selected and multiple item selected
+
+##Example
+    ```JAVA
+    @Override
+    public void onReceived(int position, MagazineListViewHolder viewHolder) {
+        Tager.getInstance().pin(viewHolder);
+        //Righ now you we already saved item
+    }
+    ```
+### we also can get which item was selected
+```JAVA
+    @Override
+    public void onReceived(int position, MagazineListViewHolder viewHolder) {
+        if(Tager.getInstance().pinniedSize() > 0){
+            PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
+            MagazineListViewHolder pinnedViewHolder = pinnedObject.getViewHolder();
+            if(pinnedViewHolder == viewHolder){
+                Log.i(TAG, "Yeah! you selected the same item");
+            }
+        }
+    }
 ```
