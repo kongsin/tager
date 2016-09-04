@@ -1,1 +1,1 @@
-include ':app', ':roofit-release', ':tager'
+include ':tager', ':sample'

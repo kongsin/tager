@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by kognsin on 9/2/2016.
@@ -65,9 +66,10 @@ public class Tager {
     Remove pinned one by it adapter position, Not index!
     */
     public void removePin(int position){
-        for (PinningObject pinningObject : mPinnedView) {
-            if (pinningObject.position == position){
-                mPinnedView.remove(pinningObject);
+        Iterator it = mPinnedView.iterator();
+        while (it.hasNext()) {
+            if (it.next().equals(position)){
+                it.remove();
                 break;
             }
         }
@@ -84,13 +86,24 @@ public class Tager {
     /*
     Get pinned item
     */
-    public PinningObject getPinnedItem(int position){
-        return mPinnedView.get(position);
+    public PinningObject getPinnedItem(int index){
+        return mPinnedView.get(index);
     }
 
+    public <T> T getPinnedItemByPosition(int position){
+        for (PinningObject pinningObject : mPinnedView) {
+            if (pinningObject.equals(position)){
+                return (T) pinningObject;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<PinningObject> getPinnedItems() {return mPinnedView;}
+
     /*
-    Remove all pinned list
-    */
+        Remove all pinned list
+        */
     public void removePinAll(){
         mPinnedView.clear();
     }
@@ -108,7 +121,8 @@ public class Tager {
     public void sendCallback(RecyclerView.ViewHolder rootView,@IdRes int position){
         if (mTager.mTagerCallbacks.size() > 0) {
             for (TagerCallback mTagerCallback : mTager.mTagerCallbacks) {
-                mTagerCallback.onReceived(position, rootView);
+                RecyclerView.ViewHolder viewHolder = Tager.getInstance().getActualView(rootView);
+                mTagerCallback.onReceived(position, viewHolder != null ? viewHolder : rootView);
             }
         }
     }
@@ -148,6 +162,17 @@ public class Tager {
         mTager.mTagerCallbacks.clear();
     }
 
+    public boolean isMatchWithPinningView(RecyclerView.ViewHolder viewHolder){
+        if (mPinnedView.size() > 0){
+            for (PinningObject pinningObject : mPinnedView) {
+                if (pinningObject.equals(viewHolder)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /*
     Pinned object is a object that you save to pinned list
     need to save separate viewHolder and position
@@ -180,6 +205,17 @@ public class Tager {
 
         public void setViewHolder(RecyclerView.ViewHolder viewHolder) {
             this.viewHolder = viewHolder;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof RecyclerView.ViewHolder){
+                RecyclerView.ViewHolder _vh = (RecyclerView.ViewHolder) obj;
+                return viewHolder.getAdapterPosition() == _vh.getAdapterPosition() && viewHolder.getAdapterPosition() == position;
+            } else if (obj instanceof Integer){
+                return obj.equals(position);
+            }
+            return false;
         }
     }
 }
