@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Gri
     @Override
     public void onReceived(int position, GridViewHolder viewHolder) {
         Log.i(TAG, "onReceived: " + viewHolder.getTagerPosition());
-        if (Tager.getInstance().isMatchWithPinnedView(viewHolder)){
+        if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
             viewHolder.resetTextColor();
             Tager.getInstance().removePin(position);
         } else {

@@ -31,7 +31,7 @@ public class GridViewHolder extends PinnedViewHolder {
     }
 
     public void setText(String text){
-        if (Tager.getInstance().isMatchWithPinnedView(this)) {
+        if (Tager.getInstance().isEqualWithPinnedView(this)) {
             ((TextView) itemView.findViewById(R.id.text)).setTextColor(Color.BLUE);
         } else {
             ((TextView) itemView.findViewById(R.id.text)).setTextColor(Color.BLACK);

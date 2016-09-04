@@ -161,7 +161,7 @@ public class Tager {
         mTager.mTagerCallbacks.clear();
     }
 
-    public boolean isMatchWithPinnedView(RecyclerView.ViewHolder viewHolder){
+    public boolean isEqualWithPinnedView(RecyclerView.ViewHolder viewHolder){
         if (mPinnedView.size() > 0){
             for (PinningObject pinningObject : mPinnedView) {
                 if (pinningObject.equals(viewHolder)){
