@@ -53,8 +53,7 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MagazineListViewHolder m = Tager.getInstance().getActualView(MagazineListViewHolder.this);
-                Tager.getInstance().sendCallback(m, getAdapterPosition());
+               Tager.getInstance().sendCallback(MagazineListViewHolder.this);
             }
         });
     }
@@ -79,16 +78,12 @@ public void onReceived(int position, MagazineListViewHolder viewHolder) {
     //Righ now you we already saved item
 }
 ```
-### we also can get which item was selected
+###Do we also can get which item was selected
 ```JAVA
 @Override
 public void onReceived(int position, MagazineListViewHolder viewHolder) {
-    if(Tager.getInstance().pinniedSize() > 0){
-        PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
-        MagazineListViewHolder tagerViewHolder = pinnedObject.getViewHolder();
-        if(tagerViewHolder == viewHolder){
-            Log.i(TAG, "Yeah! you selected the same item");
-        }
+    if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
+        Log.i(TAG, "Yeah! you selected the same item");
     }
 }
 ```
