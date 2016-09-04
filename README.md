@@ -83,8 +83,6 @@ public void onReceived(int position, MagazineListViewHolder viewHolder) {
 @Override
 public void onReceived(int position, MagazineListViewHolder viewHolder) {
     if(Tager.getInstance().pinniedSize() > 0){
-        PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
-        MagazineListViewHolder pinnedViewHolder = pinnedObject.getViewHolder();
         if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
             Log.i(TAG, "Yeah! you selected the same item");
         }
