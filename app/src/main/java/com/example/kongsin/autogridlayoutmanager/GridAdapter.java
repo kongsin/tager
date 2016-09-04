@@ -1,14 +1,11 @@
 package com.example.kongsin.autogridlayoutmanager;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.kongsin.autogridlayoutmanager.magazine_entities.MagazineItem;
 import com.example.kongsin.autogridlayoutmanager.magazine_entities.MagazineItemGroups;
-import com.example.tager.Tager;
-import com.example.tager.TagerCallback;
+import com.example.tager.TagerAdapter;
 
 import java.util.ArrayList;
 
@@ -16,17 +13,17 @@ import java.util.ArrayList;
  * Created by kongsin on 8/27/16.
  */
 
-public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> implements TagerCallback<MagazineListViewHolder> {
+public class GridAdapter extends TagerAdapter<MagazineListViewHolder> {
 
-    private static final String TAG = "GridAdapter";
     private Context mContext;
     private ArrayList<MagazineItem> mMagazineItem;
-    private MagazineListViewHolder mShowingView;
-    private int mShowingViewPosition;
 
     public GridAdapter(Context context) {
         this.mContext = context;
-        Tager.getInstance().setCallBack(this);
+    }
+
+    public MagazineItem getItem(int pos){
+        return mMagazineItem.get(pos);
     }
 
     public void setDataSet(MagazineItemGroups[] magazineItemGroupses) {
@@ -44,16 +41,9 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     }
 
     @Override
-    public void onBindViewHolder(final MagazineListViewHolder holder, int position) {
-        Tager.getInstance().subscribeView(holder);
+    public void onBindViewHolder(MagazineListViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
         holder.setupData(mMagazineItem.get(position));
-        holder.setItemSizeCallBack(new MagazineListViewHolder.ItemSizeCallBack() {
-            @Override
-            public void onNewSize(int position, int width, int height) {
-                mMagazineItem.get(position).width = width;
-                mMagazineItem.get(position).height = height;
-            }
-        });
     }
 
     @Override
@@ -64,37 +54,6 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     @Override
     public void onViewRecycled(MagazineListViewHolder holder) {
         super.onViewRecycled(holder);
-    }
-
-    @Override
-    public void onReceived(int position, MagazineListViewHolder viewHolder) {
-        if (mShowingView != null){ // if mShowing view is not null clear it first before set value to new position
-            mMagazineItem.get(mShowingViewPosition).progress = false;
-            if (mShowingView.getAdapterPosition() == mShowingViewPosition){
-                //if opening view still not recycled so can use its to clearState
-                mShowingView.clearState();
-            } else {
-                // if opening view already recycled just clear clicked position
-                viewHolder.clearState();
-            }
-        }
-        if (mShowingViewPosition != position){
-            // if showing view position not the same with selected position
-            // set value to new position and assign new position to be opening position
-            setValue(viewHolder, position);
-            mShowingView = viewHolder;
-            mShowingViewPosition = position;
-        } else {
-            // if opening position and selected position are the same
-            // clear opening position
-            mShowingView = null;
-            mShowingViewPosition = -1;
-        }
-    }
-
-    private void setValue(MagazineListViewHolder viewHolder, int position) {
-        mMagazineItem.get(position).progress = !mMagazineItem.get(position).progress; // inverse progress value
-        viewHolder.showState(mMagazineItem.get(viewHolder.getAdapterPosition()));
     }
 
 }

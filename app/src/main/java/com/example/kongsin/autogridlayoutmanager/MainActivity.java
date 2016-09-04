@@ -10,18 +10,23 @@ import android.view.View;
 import com.example.kongsin.autogridlayoutmanager.magazine_entities.Magazine;
 import com.example.roofit.Caller;
 import com.example.roofit.RooFit;
+import com.example.tager.Tager;
+import com.example.tager.TagerCallback;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TagerCallback<MagazineListViewHolder> {
     private static final String TAG = "MainActivity";
     private GridAdapter mGridAdapter;
     private RecyclerView mRecyclerView;
+    private MagazineListViewHolder mShowingView;
+    private int mShowingViewPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Tager.getInstance().setCallBack(this);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        Tager.getInstance().attach(mRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -71,4 +76,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onReceived(int position, MagazineListViewHolder viewHolder) {
+        if (Tager.getInstance().pinniedSize() > 0){
+            mGridAdapter.getItem(Tager.getInstance().getPinnedItem(0).getPosition()).progress = false;
+            if (Tager.getInstance().getPinnedItem(0).getViewHolder().getAdapterPosition() == position){
+                ((MagazineListViewHolder)Tager.getInstance().getPinnedItem(0).getViewHolder()).clearState();
+                Tager.getInstance().removePinAll();
+            } else {
+                ((MagazineListViewHolder)Tager.getInstance().getPinnedItem(0).getViewHolder()).clearState();
+                Tager.getInstance().removePinAll();
+
+                setValue(viewHolder, position);
+                Tager.getInstance().pin(viewHolder);
+            }
+        } else {
+            setValue(viewHolder, position);
+            Tager.getInstance().pin(viewHolder);
+        }
+    }
+
+    private void setValue(MagazineListViewHolder viewHolder, int position) {
+        mGridAdapter.getItem(position).progress = !mGridAdapter.getItem(position).progress; // inverse progress value
+        viewHolder.showState(mGridAdapter.getItem(viewHolder.getAdapterPosition()));
+    }
+
 }

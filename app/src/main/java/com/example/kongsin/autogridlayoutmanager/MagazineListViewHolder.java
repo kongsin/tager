@@ -34,7 +34,6 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
     private TextView mTextTitle, mTextContent, mTextRating;
     private ProgressBar progressBar;
     private ItemClickCallBack mListener;
-    private ItemSizeCallBack itemSizeCallBack;
 
     public MagazineListViewHolder(Context context, ViewGroup parent) {
         super(LayoutInflater.from(context).inflate(R.layout.magazine_layout, parent, false));
@@ -48,10 +47,6 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
                 Tager.getInstance().sendCallback(m, getAdapterPosition());
             }
         });
-    }
-
-    public void setItemSizeCallBack(ItemSizeCallBack itemSizeCallBack) {
-        this.itemSizeCallBack = itemSizeCallBack;
     }
 
     public void setOnClickListener(final ItemClickCallBack listener){
@@ -94,7 +89,6 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setupData(final MagazineItem magazineItem){
-        Log.i(TAG, "setupData: ");
         showState(magazineItem);
 
         Drawable drawable = new GradientDrawable();
