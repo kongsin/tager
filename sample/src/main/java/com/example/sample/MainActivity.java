@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.tager.Tager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements TagerCallback<GridViewHolder> {
 
     private ArrayList<String> mData = new ArrayList<>();
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Gri
 
     @Override
     public void onReceived(int position, GridViewHolder viewHolder) {
+        Log.i(TAG, "onReceived: " + viewHolder.getTagerPosition());
         if (Tager.getInstance().isMatchWithPinnedView(viewHolder)){
             viewHolder.resetTextColor();
             Tager.getInstance().removePin(position);

@@ -1,17 +1,17 @@
 package com.example.sample;
 
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.tager.PinnedViewHolder;
 import com.example.tager.Tager;
 
 /**
  * Created by kognsin on 9/5/2016.
  */
 
-public class GridViewHolder extends RecyclerView.ViewHolder {
+public class GridViewHolder extends PinnedViewHolder {
     public GridViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
