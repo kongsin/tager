@@ -78,7 +78,7 @@ public void onReceived(int position, MagazineListViewHolder viewHolder) {
     //Righ now you we already saved item
 }
 ```
-### we also can get which item was selected
+###Do we also can get which item was selected
 ```JAVA
 @Override
 public void onReceived(int position, MagazineListViewHolder viewHolder) {
