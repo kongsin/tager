@@ -14,29 +14,45 @@ public class Tager {
 
     private static Tager mTager;
     private static final String TAG = "Tager";
-    private ArrayList<TagerCallback> mTagerCallbacks;
-    private RecyclerView mRecyclerView;
+    private ArrayList<TagerCallback> mTagerCallbacks = new ArrayList<>();
     private ArrayList<PinningObject> mPinnedView = new ArrayList<>();
 
+    //Singleton create Tager object
     public static Tager getInstance(){
         if (mTager == null) mTager = new Tager();
         return mTager;
     }
 
+    /*
+    Subscribe ViewHolder for each item
+    this one will be set tag (ViewHolder) to each view of its ViewHolder
+    for follow it later
+    */
     public <T> T subscribeView(T viewHolder){
         ((RecyclerView.ViewHolder)viewHolder).itemView.setTag(viewHolder);
         T t = viewHolder;
         return t;
     }
 
-    public void attach(RecyclerView recyclerView){
-        this.mRecyclerView = recyclerView;
-    }
-
+    /*
+    Pin is things that you need to make it be like a current following
+    Example : If you need to know what is a current clicked view holder
+    so you can pin it to be a current clicked one.
+    Example Call :
+    Tager.getInstance().pin(ClickedViewHolder);
+    So right now ClickedViewHolder is pinned.
+    you can get pined ViewHolder by call method getPinnedItem(int index);
+    */
     public void pin(RecyclerView.ViewHolder viewHolder){
         mPinnedView.add(new PinningObject(viewHolder, viewHolder.getAdapterPosition()));
     }
 
+    /*
+    updatePinnedView is a important method it help to resolve the problem like below one
+    Example : when you had pinned ViewHolder one and then that ViewHolder was destroyed by recycler view.
+    Right now you cannot follow that view holder because this was destroyed, So you need to update pinnedView when it
+    come to onBindViewHolder in the adapter.
+    */
     public void updatePinnedView(RecyclerView.ViewHolder viewHolder){
         for (PinningObject pinningObject : mPinnedView) {
             if (pinningObject.position == viewHolder.getAdapterPosition()){
@@ -45,6 +61,9 @@ public class Tager {
         }
     }
 
+    /*
+    Remove pinned one by it adapter position, Not index!
+    */
     public void removePin(int position){
         for (PinningObject pinningObject : mPinnedView) {
             if (pinningObject.position == position){
@@ -54,23 +73,38 @@ public class Tager {
         }
     }
 
+    /*
+    Remove pinned one by index in pinned list
+    */
     public void removePinAtIndex(int index){
         mPinnedView.remove(index);
     }
 
 
+    /*
+    Get pinned item
+    */
     public PinningObject getPinnedItem(int position){
         return mPinnedView.get(position);
     }
 
+    /*
+    Remove all pinned list
+    */
     public void removePinAll(){
         mPinnedView.clear();
     }
 
+    /*
+    Get pinned size
+    */
     public int pinniedSize(){
         return mPinnedView.size();
     }
 
+    /*
+    Send callback to all callback in callback list
+    */
     public void sendCallback(RecyclerView.ViewHolder rootView,@IdRes int position){
         if (mTager.mTagerCallbacks.size() > 0) {
             for (TagerCallback mTagerCallback : mTager.mTagerCallbacks) {
@@ -79,17 +113,14 @@ public class Tager {
         }
     }
 
+    /*
+    when you get clicked view holder but you cannot specific which one is current clicked because its was
+    shared to another item you need to use this method to get actual viewholder that it was set tag to each itemView
+    of each ViewHolder
+    */
     public <T> T getActualView(RecyclerView.ViewHolder view){
         T t = (T) view.itemView.findViewWithTag(view).getTag();
        return t;
-    }
-
-    public <T> T getActualView(View itemView) {
-        if (mRecyclerView != null){
-            return (T) mRecyclerView.getChildViewHolder(itemView);
-        } else {
-            throw new Error("Null attached RecyclerView : Tager.getInstance().attach(RecyclerView recyclerView)");
-        }
     }
 
     public <T> T getActualView(RecyclerView.ViewHolder viewHolder, View view){
@@ -97,18 +128,36 @@ public class Tager {
         return t;
     }
 
+    /*
+    Set callBack to call back list
+    */
     public void setCallBack(TagerCallback tagerCallback){
         mTager.mTagerCallbacks.add(tagerCallback);
     }
-
+    /*
+    Remove callBack to call from list
+    */
     public void removeCallBack(TagerCallback tagerCallback){
         mTager.mTagerCallbacks.remove(tagerCallback);
     }
 
+    /*
+    Clear all callBack from callBack list
+    */
     public void clearCallBack(){
         mTager.mTagerCallbacks.clear();
     }
 
+    /*
+    Pinned object is a object that you save to pinned list
+    need to save separate viewHolder and position
+    for check that view holder is still correct one
+    by if(positon == viewHolder.getAdapterPosition()){
+            //this one is correct one
+        } else {
+           // something went wrong maybe ViewHolder was destroyed and cannot update
+        }
+    */
     public class PinningObject{
         private int position;
         private RecyclerView.ViewHolder viewHolder;

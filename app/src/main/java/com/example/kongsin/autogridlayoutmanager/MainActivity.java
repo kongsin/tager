@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Mag
         Tager.getInstance().setCallBack(this);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        Tager.getInstance().attach(mRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
