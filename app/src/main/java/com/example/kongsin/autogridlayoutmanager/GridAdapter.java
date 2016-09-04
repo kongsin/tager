@@ -23,7 +23,6 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     private ArrayList<MagazineItem> mMagazineItem;
     private MagazineListViewHolder mShowingView;
     private int mShowingViewPosition;
-    private ArrayList<ItemSizePool> mItemSizePools = new ArrayList<>();
 
     public GridAdapter(Context context) {
         this.mContext = context;
@@ -63,21 +62,6 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
     }
 
     @Override
-    public void onViewAttachedToWindow(MagazineListViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(MagazineListViewHolder holder) {
-        ItemSizePool sizePool = new ItemSizePool();
-        sizePool.position = holder.getAdapterPosition();
-        sizePool.w = ViewGroup.LayoutParams.MATCH_PARENT;
-        sizePool.h = holder.itemView.getMeasuredHeight();
-        mItemSizePools.add(sizePool);
-        super.onViewDetachedFromWindow(holder);
-    }
-
-    @Override
     public void onViewRecycled(MagazineListViewHolder holder) {
         super.onViewRecycled(holder);
     }
@@ -113,9 +97,4 @@ public class GridAdapter extends RecyclerView.Adapter<MagazineListViewHolder> im
         viewHolder.showState(mMagazineItem.get(viewHolder.getAdapterPosition()));
     }
 
-    class ItemSizePool {
-        int position;
-        int w;
-        int h;
-    }
 }
