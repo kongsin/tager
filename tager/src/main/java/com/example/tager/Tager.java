@@ -1,6 +1,5 @@
 package com.example.tager;
 
-import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -118,7 +117,7 @@ public class Tager {
     /*
     Send callback to all callback in callback list
     */
-    public void sendCallback(RecyclerView.ViewHolder rootView,@IdRes int position){
+    public void sendCallback(RecyclerView.ViewHolder rootView, int position){
         if (mTager.mTagerCallbacks.size() > 0) {
             for (TagerCallback mTagerCallback : mTager.mTagerCallbacks) {
                 RecyclerView.ViewHolder viewHolder = Tager.getInstance().getActualView(rootView);
