@@ -65,29 +65,30 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
 }
 ```
 ## Pin
--Single Selection
--Multi Selecteion
+####Single Selection
+####Multi Selecteion
 
 Pin is feature to remember which item was selected for single item selected and multiple item selected
 
 ##Example
-    ```JAVA
-    @Override
-    public void onReceived(int position, MagazineListViewHolder viewHolder) {
-        Tager.getInstance().pin(viewHolder);
-        //Righ now you we already saved item
-    }
-    ```
+
+```JAVA
+@Override
+public void onReceived(int position, MagazineListViewHolder viewHolder) {
+    Tager.getInstance().pin(viewHolder);
+    //Righ now you we already saved item
+}
+```
 ### we also can get which item was selected
 ```JAVA
-    @Override
-    public void onReceived(int position, MagazineListViewHolder viewHolder) {
-        if(Tager.getInstance().pinniedSize() > 0){
-            PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
-            MagazineListViewHolder pinnedViewHolder = pinnedObject.getViewHolder();
-            if(pinnedViewHolder == viewHolder){
-                Log.i(TAG, "Yeah! you selected the same item");
-            }
+@Override
+public void onReceived(int position, MagazineListViewHolder viewHolder) {
+    if(Tager.getInstance().pinniedSize() > 0){
+        PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
+        MagazineListViewHolder pinnedViewHolder = pinnedObject.getViewHolder();
+        if(pinnedViewHolder == viewHolder){
+            Log.i(TAG, "Yeah! you selected the same item");
         }
     }
+}
 ```
