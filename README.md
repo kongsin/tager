@@ -53,8 +53,7 @@ public class MagazineListViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MagazineListViewHolder m = Tager.getInstance().getActualView(MagazineListViewHolder.this);
-                Tager.getInstance().sendCallback(m, getAdapterPosition());
+               Tager.getInstance().sendCallback(MagazineListViewHolder.this);
             }
         });
     }
@@ -85,8 +84,8 @@ public void onReceived(int position, MagazineListViewHolder viewHolder) {
 public void onReceived(int position, MagazineListViewHolder viewHolder) {
     if(Tager.getInstance().pinniedSize() > 0){
         PinningObject pinnedObject = Tager.getInstance().getPinnedItem(0).getViewHolder();
-        MagazineListViewHolder tagerViewHolder = pinnedObject.getViewHolder();
-        if(tagerViewHolder == viewHolder){
+        MagazineListViewHolder pinnedViewHolder = pinnedObject.getViewHolder();
+        if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
             Log.i(TAG, "Yeah! you selected the same item");
         }
     }
