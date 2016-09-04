@@ -82,10 +82,8 @@ public void onReceived(int position, MagazineListViewHolder viewHolder) {
 ```JAVA
 @Override
 public void onReceived(int position, MagazineListViewHolder viewHolder) {
-    if(Tager.getInstance().pinniedSize() > 0){
-        if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
-            Log.i(TAG, "Yeah! you selected the same item");
-        }
+    if (Tager.getInstance().isEqualWithPinnedView(viewHolder)){
+        Log.i(TAG, "Yeah! you selected the same item");
     }
 }
 ```
