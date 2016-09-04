@@ -5,6 +5,7 @@ You can get actual ViewHolder of each positions.
 ##Exaple basicly using
 
 ##Activity Class
+
 public class MainActivity extends AppCompatActivity implements TagerCallback<MagazineListViewHolder> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements TagerCallback<Mag
   }
 
 ##Adapter Class
+
 public class GridAdapter extends TagerAdapter<MagazineListViewHolder> {
 @Override
     public MagazineListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
