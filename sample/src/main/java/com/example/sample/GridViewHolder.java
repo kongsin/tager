@@ -31,7 +31,7 @@ public class GridViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setText(String text){
-        if (Tager.getInstance().isMatchWithPinningView(this)) {
+        if (Tager.getInstance().isMatchWithPinnedView(this)) {
             ((TextView) itemView.findViewById(R.id.text)).setTextColor(Color.BLUE);
         } else {
             ((TextView) itemView.findViewById(R.id.text)).setTextColor(Color.BLACK);
