@@ -4,20 +4,20 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.tager.PinnedViewHolder;
+import com.example.tager.TagerViewHolder;
 import com.example.tager.Tager;
 
 /**
  * Created by kognsin on 9/5/2016.
  */
 
-public class GridViewHolder extends PinnedViewHolder {
+public class GridViewHolder extends TagerViewHolder {
     public GridViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tager.getInstance().sendCallback(GridViewHolder.this, getAdapterPosition());
+                Tager.getInstance().sendCallback(GridViewHolder.this);
             }
         });
     }

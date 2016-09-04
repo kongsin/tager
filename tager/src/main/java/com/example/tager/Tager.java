@@ -117,7 +117,14 @@ public class Tager {
     /*
     Send callback to all callback in callback list
     */
-    public void sendCallback(RecyclerView.ViewHolder rootView, int position){
+    public void sendCallback(RecyclerView.ViewHolder rootView){
+        if (rootView instanceof TagerViewHolder){
+            sendCallback(rootView, ((TagerViewHolder) rootView).getTagerPosition());
+        } else {
+            sendCallback(rootView, rootView.getAdapterPosition());
+        }
+    }
+    private void sendCallback(RecyclerView.ViewHolder rootView, int position){
         if (mTager.mTagerCallbacks.size() > 0) {
             for (TagerCallback mTagerCallback : mTager.mTagerCallbacks) {
                 RecyclerView.ViewHolder viewHolder = Tager.getInstance().getActualView(rootView);
